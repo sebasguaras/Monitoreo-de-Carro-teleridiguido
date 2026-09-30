@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control Web - Grupo 9</title>
+    <!-- Esta es la línea para el logo en la pestaña de la página (Favicon) -->
+    <link rel="icon" href="LOGOPAGUINA.jpg" type="image/jpeg">
+    <style>
+        /* Estilos generales */
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background-color: #090023; 
+            color: #f6f3f3; 
+        }
+
+        /* Encabezado oficial */
+        header { 
+            background-color: #100163; 
+            color: white; 
+            text-align: center; 
+            padding: 40px 30px; 
+            position: relative; /* Ajuste para mover el logo */
+        }
+        
+        /* Ajustes del logo de la San Francisco: Izquierda y corte redondo */
+        header img {
+            position: absolute;
+            left: 40px; 
+            top: 50%;
+            transform: translateY(-50%); 
+            width: 100px;
+            height: 100px; 
+            border-radius: 50%; /* Corte circular para ocultar fondos */
+            object-fit: cover; 
+        }
+
+        .institucion { 
+            font-size: 1.3em; 
+            font-weight: bold; 
+            margin-bottom: 5px; 
+        }
+        .grupo-info { 
+            font-size: 1em; 
+            color: #ccc; 
+        }
+
+        /* Barra de Navegación */
+        nav { 
+            background-color: #f5f0f4; 
+            display: flex; 
+            justify-content: center; 
+            flex-wrap: wrap;
+            padding: 15px 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+        }
+        nav button { 
+            background: none;
+            border: none;
+            color: rgb(0, 0, 0); 
+            margin: 5px 10px; 
+            font-weight: bold; 
+            font-size: 1em; 
+            padding: 8px 12px; 
+            border-radius: 5px; 
+            cursor: pointer;
+            transition: background 0.3s ease; 
+        }
+        nav button:hover, nav button.activo { 
+            background-color: #555; 
+            color: #0151ff; 
+        }
+
+        /* Contenedores de Secciones */
+        .seccion { 
+            display: none; 
+            background-image: url('fondo 4.jpg'); /* Asegúrate de que la ruta sea correcta */
+            background-size: cover;
+            background-position: center;
+            padding: 40px; 
+            margin: 40px auto; 
+            max-width: 1000px; 
+            border-radius: 10px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
+        }
+        .seccion.visible { 
+            display: block; 
+        }
+        h2 { 
+            color: #ffffff; 
+            border-bottom: 6px solid #002fff; 
+            padding-bottom: 10px; 
+            margin-bottom: 20px; 
+            text-align: center;
+        }
+
+        /* Contenedores multimedia (Cámara y Video) */
+        .multimedia-box { 
+            width: 100%; 
+            height: 400px; 
+            background-color: #e9ecef; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border: 2px dashed #adb5bd; 
+            border-radius: 10px; 
+            color: #6c757d; 
+            font-weight: bold; 
+            padding: 20px; 
+            box-sizing: border-box; 
+            margin-bottom: 20px;
+        }
+        
+        /* Cajas de Componentes con Fotos */
+        .caja-componente {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: left;
+            color: #333;
+        }
+        .caja-componente h3 {
+            margin-top: 0;
+            color: #003366;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+        
+        /* Etiqueta de cantidad */
+        .cantidad {
+            background-color: #d1e7dd;
+            color: #0f5132;
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            border: 1px solid #badbcc;
+        }
+
+        .desc-componente {
+            font-size: 1.05em;
+            color: #444;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        .imagenes-comparacion {
+            display: flex;
+            justify-content: space-around;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .foto-box {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+        }
+        .foto-box img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .foto-box p {
+            font-size: 0.9em;
+            color: #666;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        /* Lista vertical para las capturas de código (Una debajo de otra) */
+        .grid-capturas {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-top: 20px;
+        }
+        .captura-item {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .captura-item p {
+            font-size: 1em;
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        .captura-item img {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            margin: 0 auto;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        .titulo-captura {
+            color: #000000;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
+        /* Ajuste para que los videos no rompan la caja */
+        video {
+            width: 100%;
+            height: 100%;
+            max-height: 380px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        /* Efecto dinámico y mejora de nitidez para las imágenes */
+        .foto-box img, .captura-item img, .foto-esquema img {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            object-fit: cover;
+        }
+        
+        .foto-box img:hover, .captura-item img:hover, .foto-esquema img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        }
+
+        /* ========================================== */
+        /* DISEÑO RESPONSIVO (MÓVILES Y TABLETS)      */
+        /* ========================================== */
+        @media screen and (max-width: 768px) {
+            header { padding: 15px 10px; }
+            .institucion { font-size: 1.1em; }
+            
+            /* Ajuste del logo para pantallas móviles */
+            header img { 
+                position: relative; 
+                left: 0;
+                transform: none;
+                width: 75px; 
+                height: 75px;
+                margin-bottom: 10px;
+            }
+            
+            nav { padding: 10px 5px; }
+            nav button { 
+                font-size: 0.85em; 
+                margin: 4px; 
+                padding: 6px 8px;
+                flex: 1 1 30%; 
+                text-align: center;
+            }
+            .seccion { padding: 20px 15px; margin: 15px 10px; }
+            .imagenes-comparacion { flex-direction: column; align-items: center; }
+            .foto-box { min-width: 100%; margin-bottom: 15px; }
+            .multimedia-box { height: auto; min-height: 200px; padding: 10px; }
+            video { max-height: 250px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Encabezado -->
+    <header>
+        <img src="LOGO.jpg" alt="Logo Colegio">
+        <div class="institucion">Unidad Educativa Municipal Técnica y en Ciencias San Francisco de Quito</div>
+        <h1>Proyecto: Vehículo a Control Remoto</h1>
+        <div class="grupo-info">
+            <p><strong>Grupo N°. 9:</strong> Sebastián Guaras, Jordan Ramírez</p>
+        </div>
+    </header>
+
+    <!-- Barra de Navegación con Botones -->
+    <nav>
+        <button onclick="cambiarSeccion('inicio')" id="nav-inicio" class="activo">Inicio y Cámara</button>
+        <button onclick="cambiarSeccion('componentes')" id="nav-componentes">Componentes</button>
+        <button onclick="cambiarSeccion('elementos')" id="nav-elementos">Elementos</button>
+        <button onclick="cambiarSeccion('codigo')" id="nav-codigo">Desarrollo Web</button>
+        <button onclick="cambiarSeccion('videos')" id="nav-videos">Videos del Armado</button>
+        <button onclick="cambiarSeccion('videos-funcionamiento')" id="nav-videos-funcionamiento">Videos de Funcionamiento</button>
+        <button onclick="cambiarSeccion('integrantes')" id="nav-integrantes">Integrantes</button>
+    </nav>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓN 1: CÁMARA EN VIVO DEL ESP32-CAM    -->
+    <!-- ========================================== -->
+    <section id="inicio" class="seccion visible" style="text-align: center;">
+        <h2>Transmisión en Vivo</h2>
+        <p>Monitoreo en tiempo real para conducir el vehículo a distancia.</p>
+
+        <!-- Contenedor del Video -->
+        <div style="width: 100%; max-width: 600px; margin: 0 auto; background-color: #000; border: 3px solid #003366; border-radius: 10px; overflow: hidden; display: flex; justify-content: center; align-items: center; min-height: 260px;">
+            <img id="streamCamara" 
+                 src="" 
+                 alt="Cámara Desconectada o Esperando Señal..." 
+                 style="width: 100%; height: auto; display: block;" 
+                 onerror="this.alt='Error: Verifica que el ESP32 esté encendido y en el mismo Wi-Fi';">
+        </div>
+
+        <!-- Botón de Reconexión Rápida -->
+        <button onclick="reconectarCamara()" 
+                style="margin-top: 15px; padding: 10px 20px; font-weight: bold; background-color: #0056b3; color: white; border: none; border-radius: 5px; cursor: pointer;">
+             Refrescar Transmisión
+        </button>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓN 2: COMPONENTES                     -->
+    <!-- ========================================== -->
+    <section id="componentes" class="seccion">
+        <h2>Componentes del Carro</h2>
+        <p>Hardware principal utilizado en el diseño, procesamiento y control del proyecto:</p>
+        
+        <!-- Componente 1 -->
+        <div class="caja-componente">
+            <h3>1. Microcontrolador / Cámara: ESP32-CAM</h3>
+            <div class="cantidad">Cantidad: 1 unidad</div>
+            <p class="desc-componente"><strong>Descripción:</strong>  Se encarga de conectarse a la red Wi-Fi, transmitir el video en tiempo real.</p>
+            <div class="imagenes-comparacion">
+                <div class="foto-box">
+                    <img src="ESP32-CAM.jpg" alt="ESP32-CAM Google">
+                    <p>Referencia (Google)</p>
+                </div>
+                <div class="foto-box">
+                    <img src="ESP32-CAM1.jpg" alt="ESP32-CAM Proyecto">
+                    <p>Foto en nuestro proyecto</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Componente 2 -->
+        <div class="caja-componente">
+            <h3>2. Control de Motores: Driver L298N</h3>
+            <div class="cantidad">Cantidad: 1 unidad</div>
+            <p class="desc-componente"><strong>Descripción:</strong> Puente H utilizado para controlar el sentido de giro y la velocidad de los motores del carro recibiendo las órdenes de las placas principales.</p>
+            <div class="imagenes-comparacion">
+                <div class="foto-box">
+                    <img src="Driver L298N.jpg" alt="L298N Google">
+                    <p>Referencia (Google)</p>
+                </div>
+                <div class="foto-box">
+                    <img src="Driver L298N1.jpg" alt="L298N Proyecto">
+                    <p>Foto en nuestro proyecto</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Componente 3 -->
+        <div class="caja-componente">
+            <h3>3. Procesamiento de fuerza: Arduino Nano</h3>
+            <div class="cantidad">Cantidad: 1 unidad</div>
+            <p class="desc-componente"><strong>Descripción:</strong> Microcontrolador secundario encargado del trabajo pesado: mover los motores, controlar los servomotores y procesar los sensores, evitando sobrecargar la cámara.</p>
+            <div class="imagenes-comparacion">
+                <div class="foto-box">
+                    <img src="Arduino Nano.jpg" alt="Arduino Nano Google">
+                    <p>Referencia (Google)</p>
+                </div>
+                <div class="foto-box">
+                    <img src="Arduino Nano1.jpg" alt="Arduino Nano Proyecto">
+                    <p>Foto en nuestro proyecto</p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Componente 5 -->
+        <div class="caja-componente">
+            <h3>4. Alimentación: Baterías 18650 y Módulo LM2596</h3>
+            <div class="cantidad">Cantidad: 2 baterías 18650, 1 portapilas, 1 módulo LM2596</div>
+            <p class="desc-componente"><strong>Descripción:</strong> Proveen 7.4V de potencia para los motores, mientras que el módulo Step-Down LM2596 estabiliza esa energía a 5V seguros para las placas electrónicas.</p>
+            <div class="imagenes-comparacion">
+                <div class="foto-box">
+                    <img src="Captura de pantalla 2026-09-28 082954.png" alt="Baterias Google">
+                    <p>Referencia (Google)</p>
+                </div>
+                <div class="foto-box">
+                    <img src="Baterías 18650 y módulo LM25961.jpg" alt="Baterias Proyecto">
+                    <p>Foto en nuestro proyecto</p>
+                </div>
+            </div>
+        </div>
+        <!-- Nuevo Elemento: Módulo Bluetooth -->
+        <div class="caja-componente">
+            <h3>5. Módulo Bluetooth (HC-05 / HC-06)</h3>
+            <div class="cantidad">Cantidad: 1 unidad</div>
+            <p class="desc-componente"><strong>Descripción:</strong> Permite establecer comunicación inalámbrica por Bluetooth con el Arduino. Es vital para enviar los comandos de movimiento desde un teléfono celular para conducir el vehículo en caso de no usar la red Wi-Fi.</p>
+            <div class="imagenes-comparacion">
+                <div class="foto-box">
+                    <img src="BLUETOOTH1.jpg" alt="Bluetooth Google" onerror="this.src='https://via.placeholder.com/300x200?text=Bluetooth+Google'">
+                    <p>Referencia (Google)</p>
+                </div>
+                <div class="foto-box">
+                    <img src="BLUETOOTH.jpg" alt="Bluetooth Proyecto" onerror="this.src='https://via.placeholder.com/300x200?text=Bluetooth+Proyecto'">
+                    <p>Foto en nuestro proyecto</p>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓN 3: ELEMENTOS Y ESQUEMA             -->
+    <!-- ========================================== -->
+    <section id="elementos" class="seccion">
+        <h2>Elementos Adicionales</h2>
+        <p>En esta sección se detallan componentes complementarios de conexión y estructura utilizados para el ensamblaje.</p>
+        
+        
+        <!-- Elemento 2 -->
+        <div class="caja-componente">
+            <h3>1. Resistencias (220Ω, 1kΩ, 10kΩ)</h3>
+            <div class="cantidad">Cantidad: 4 de 220Ω, 1 de 1kΩ, 1 de 10kΩ</div>
+            <p class="desc-componente"><strong>Descripción:</strong> Pequeños componentes de seguridad para proteger los LEDs y evitar que la placa principal se queme al bajar el voltaje del sensor ultrasónico y de los pines de comunicación.</p>
+            <div class="imagenes-comparacion">
+                <div class="foto-box">
+                    <img src="Resistencias (220Ω, 1kΩ, 10kΩ).jpg" alt="Resistencias Google">
+                    <p>Referencia (Google)</p>
+                </div>
+                <div class="foto-box">
+                    <img src="Resistencias (220Ω, 1kΩ, 10kΩ)1.jpg" alt="Resistencias Proyecto">
+                    <p>Foto en nuestro proyecto</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Elemento 3 -->
+        <div class="caja-componente">
+            <h3>2. Faros: LEDs Blancos</h3>
+            <div class="cantidad">Cantidad: 4 unidades (2 frontales, 2 traseros)</div>
+            <p class="desc-componente"><strong>Descripción:</strong> Diodos emisores de luz instalados en la parte frontal y trasera para iluminar el camino del vehículo y mejorar el diseño visual de la carrocería.</p>
+            <div class="imagenes-comparacion">
+                <div class="foto-box">
+                    <img src="LEDs Blancos.jpg" alt="LEDs Google">
+                    <p>Referencia (Google)</p>
+                </div>
+                <div class="foto-box">
+                    <img src="LEDs Blancos1.jpg" alt="LEDs Proyecto">
+                    <p>Foto en nuestro proyecto</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Elemento 4 -->
+        <div class="caja-componente">
+            <h3>3. Estructura: Chasis Acrílico y Motores DC</h3>
+            <div class="cantidad">Cantidad: 1 kit de chasis, 4 motores DC, 4 llantas</div>
+            <p class="desc-componente"><strong>Descripción:</strong> El soporte base transparente donde montamos todos los componentes, impulsado por los motores con llantas de goma que brindan tracción al suelo.</p>
+            <div class="imagenes-comparacion">
+                <div class="foto-box">
+                    <img src="CHASIS.jpg" alt="Chasis Google">
+                    <p>Referencia (Google)</p>
+                </div>
+                <div class="foto-box">
+                    <img src="CHASIS1.jpg" alt="Chasis Proyecto">
+                    <p>Foto en nuestro proyecto</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESQUEMA DEL CIRCUITO -->
+        <div class="caja-componente" style="text-align: center; background-color: #eef2f5;">
+            <h3>Esquema General de Conexiones</h3>
+            <p class="desc-componente">Diagrama técnico que ilustra el cableado completo del circuito entre los microcontroladores, el puente H, sensores y alimentación.</p>
+            <div class="foto-esquema" style="margin-top: 15px;">
+                <img src="esquema.jpg" alt="Esquema del Circuito" style="max-width: 100%; width: 700px; height: auto; border-radius: 8px; border: 2px solid #ccc; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓN 4: DESARROLLO WEB Y CÓDIGO         -->
+    <!-- ========================================== -->
+    <section id="codigo" class="seccion">
+        <h2>Líneas de Código y Desarrollo Web</h2>
+        <p style="text-align: center;">Evidencia del proceso de programación de la página web. A continuación, se detalla la función de las líneas de código principales.</p>
+        
+        <div class="grid-capturas">
+            <div class="captura-item">
+                <p><span class="titulo-captura">1. Estructura y DOCTYPE</span> Esta línea define que el documento es un archivo HTML5, asegurando que el navegador interprete correctamente el código de nuestra interfaz web.</p>
+                <img src="captura DOCI.png" alt="Captura 1">
+            </div>
+            <div class="captura-item">
+                <p><span class="titulo-captura">2. Head y Metadatos</span> Configura la vista para dispositivos móviles (viewport) y el título de la pestaña, garantizando que el panel de control se adapte a cualquier pantalla.</p>
+                <img src="captura 2.png" alt="Captura 2">
+            </div>
+            <div class="captura-item">
+                <p><span class="titulo-captura">3. Estilos Generales (CSS)</span> Aplica el color de fondo y la tipografía a toda la página, dándole el diseño visual tipo panel de administración a nuestro proyecto.</p>
+                <img src="captura 3.png" alt="Captura 3">
+            </div>
+            <div class="captura-item">
+                <p><span class="titulo-captura">4. Diseño del Encabezado</span> Configura los colores corporativos, la alineación centrada y el espaciado para destacar el nombre de nuestra unidad educativa.</p>
+                <img src="captura 4.png" alt="Captura 4">
+            </div>
+            <div class="captura-item">
+                <p><span class="titulo-captura">5. Navegación Fija (Sticky Nav)</span> Hace que la barra del menú se quede pegada en la parte superior al hacer scroll, permitiendo al usuario cambiar de sección rápidamente.</p>
+                <img src="captura 5.png" alt="Captura 5">
+            </div>
+            <div class="captura-item">
+                <p><span class="titulo-captura">6. Estilos de Secciones</span> Define los márgenes y sombras de los cuadros blancos de contenido, dándoles una apariencia separada y limpia frente al fondo gris.</p>
+                <img src="captura 6.png" alt="Captura 6">
+            </div>
+            <div class="captura-item">
+                <p><span class="titulo-captura">7. Ocultamiento (SPA)</span> La regla 'display: none' oculta todas las secciones por defecto. Es el núcleo que permite navegar sin recargar la página entera.</p>
+                <img src="captura 7.png" alt="Captura 7">
+            </div>
+            <div class="captura-item">
+                <p><span class="titulo-captura">8. Cajas Multimedia</span> Estructura en CSS (Multimedia-box) que define el tamaño y borde del recuadro destinado a recibir el video de la cámara del carro.</p>
+                <img src="captura 8.png" alt="Captura 8">
+            </div>
+            <div class="captura-item">
+                <p><span class="titulo-captura">9. Etiqueta Header (HTML)</span> Es el bloque principal que agrupa nuestro logo, el título del proyecto y los nombres de los creadores en la parte superior de la interfaz.</p>
+                <img src="captura 9.png" alt="Captura 9">
+            </div>
+            <div class="captura-item">
+                <p><span class="titulo-captura">10. Datos del Grupo</span> Código que muestra los nombres específicos de los integrantes del Grupo N°. 9 (Sebastián Guaras, Jordan Ramírez).</p>
+                <img src="captura 10.png" alt="Captura 10">
+            </div>
+            <div class="captura-item">
+                <p><span class="titulo-captura">11. Botones del Menú</span> Etiquetas 'button' con eventos 'onclick'. Al presionarlos, ejecutan un script para cambiar la vista hacia la sección correspondiente.</p>
+                <img src="captura 11.png" alt="Captura 11">
+            </div>
+            <div class="captura-item">
+                <p><span class="titulo-captura">12. Sección de Inicio</span> El bloque HTML que aloja la caja multimedia. Será el destino del enlace de transmisión de video enviado por el ESP32-CAM.</p>
+                <img src="captura 12.png" alt="Captura 12">
+            </div>
+            <div class="captura-item">
+                <p><span class="titulo-captura">13. Sección Componentes</span> Una lista HTML utilizada para enlistar formalmente el hardware principal, como el puente H y el microcontrolador.</p>
+                <img src="captura 13.png" alt="Captura 13">
+            </div>
+            <div class="captura-item">
+                <p><span class="titulo-captura">14. Elementos Adicionales</span> Bloque que agrupa los complementos del circuito, mostrando cómo HTML estructura la información de forma legible para el usuario.</p>
+                <img src="captura 14.png" alt="Captura 14">
+            </div>
+            <div class="captura-item">
+                <p><span class="titulo-captura">15. Cuadrícula (Grid)</span> La clase CSS 'grid-capturas' que organiza automáticamente estas 20 imágenes en columnas dependiendo del tamaño de la pantalla.</p>
+                <img src="captura 15.png" alt="Captura 15">
+            </div>
+            <div class="captura-item">
+                <p><span class="titulo-captura">16. Sección de Videos</span> Contenedores diseñados para insertar etiquetas HTML de video, lo que permitirá reproducir las grabaciones del ensamblaje.</p>
+                <img src="captura 16.png" alt="Captura 16">
+            </div>
+            <div class="captura-item">
+                <p><span class="titulo-captura">17. Script JS (Inicio)</span> La función de JavaScript que busca todos los elementos con la clase 'seccion' y los oculta temporalmente al hacer clic en el menú.</p>
+                <img src="captura 17.png" alt="Captura 17">
+            </div>
+            <div class="captura-item">
+                <p><span class="titulo-captura">18. Resaltado de Menú (JS)</span> Lógica que borra el color verde de todos los botones del navegador para prepararlos antes de iluminar la opción seleccionada.</p>
+                <img src="captura 18.png" alt="Captura 18">
+            </div>
+            <div class="captura-item">
+                <p><span class="titulo-captura">19. Cambio de Sección (JS)</span> Toma el ID específico de la sección elegida y le agrega la clase 'visible' para que aparezca en pantalla, creando el efecto dinámico.</p>
+                <img src="captura 19.png" alt="Captura 19">
+            </div>
+            <div class="captura-item">
+                <p><span class="titulo-captura">20. Cierre de Etiquetas</span> El final del código con el cierre de las etiquetas 'body' y 'html', fundamentales para que la estructura no presente errores de lectura.</p>
+                <img src="captura 20.png" alt="Captura 20">
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓN 5: VIDEOS DEL ARMADO               -->
+    <!-- ========================================== -->
+    <section id="videos" class="seccion">
+        <h2>Videos de Armado del Carro</h2>
+        <p style="text-align: center;">Proceso paso a paso de la construcción física y electrónica de nuestro vehículo teledirigido.</p>
+        
+        <!-- Video 1 -->
+        <div class="multimedia-box" style="border: none; background: transparent; padding: 0;">
+            <video src="VIDEOENSAMBLAJE.mp4" controls preload="metadata"></video>
+        </div>
+        
+        <!-- Video 2 -->
+        <div class="multimedia-box" style="border: none; background: transparent; padding: 0;">
+            <video src="VIDEOENSAMBLAJE1.mp4" controls preload="metadata"></video>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓN 6: VIDEOS DE FUNCIONAMIENTO        -->
+    <!-- ========================================== -->
+    <section id="videos-funcionamiento" class="seccion">
+        <h2>Videos de Funcionamiento</h2>
+        <p style="text-align: center;">Demostración del vehículo en movimiento, pruebas de control remoto y respuesta de los sensores en pista.</p>
+        
+        <!-- Espacio para el Video de Funcionamiento -->
+        <div class="multimedia-box" style="border: none; background: transparent; padding: 0;">
+            <video src="video funcionamiento.mp4" controls preload="metadata"></video>
+        </div>
+    </section>
+<!-- ========================================== -->
+    <!-- SECCIÓN: INTEGRANTES                       -->
+    <!-- ========================================== -->
+    <section id="integrantes" class="seccion">
+        <h2>Equipo Desarrollador</h2>
+        <p style="text-align: center;">Conoce a los responsables de la construcción, electrónica y programación del proyecto.</p>
+        
+        <div class="imagenes-comparacion">
+            <!-- Integrante 1: Sebastián Guaras -->
+            <div class="caja-componente" style="flex: 1; text-align: center; max-width: 450px;">
+                <!-- Reemplaza "foto_sebastian.jpg" con el nombre real de tu foto -->
+                <img src="Sebastian.jpg" alt="Foto de Sebastián Guaras" style="width: 180px; height: 180px; border-radius: 50%; object-fit: cover; border: 4px solid #002fff; margin-bottom: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                <h3 style="border-bottom: none; color: #003366; margin-bottom: 5px;">Sebastián Guaras</h3>
+                <div class="cantidad" style="background-color: #cce5ff; color: #004085; border-color: #b8daff;">Hardware y Redes</div>
+                <p class="desc-componente" style="text-align: justify; font-size: 0.95em;">
+                    <strong>Rol:</strong> Encargado de la estructura física del carro, el ensamblaje de los componentes y las conexiones electrónicas. Responsable de la configuración de la red Wi-Fi y la vinculación del módulo ESP32-CAM para habilitar la transmisión de video.
+                </p>
+            </div>
+
+            <!-- Integrante 2: Jordan Ramírez -->
+            <div class="caja-componente" style="flex: 1; text-align: center; max-width: 450px;">
+                <!-- Reemplaza "foto_jordan.jpg" con el nombre real de la foto de Jordan -->
+                <img src="Jordan.jpg" alt="Foto de Jordan Ramírez" style="width: 180px; height: 180px; border-radius: 50%; object-fit: cover; border: 4px solid #002fff; margin-bottom: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                <h3 style="border-bottom: none; color: #003366; margin-bottom: 5px;">Jordan Ramírez</h3>
+                <div class="cantidad" style="background-color: #e2e3e5; color: #383d41; border-color: #d6d8db;">Desarrollo Web (Software)</div>
+                <p class="desc-componente" style="text-align: justify; font-size: 0.95em;">
+                    <strong>Rol:</strong> Encargado de la programación del código base de la página, la creación de la estructura de las secciones (HTML) y la aplicación de estilos (CSS) para darle un diseño profesional a la interfaz de control.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Configuración de la transmisión ESP32
+        const ipESP32 = "192.168.100.9"; 
+
+        // Función para conectar y cargar el stream de la cámara
+        function cargarVideo() {
+            const img = document.getElementById('streamCamara');
+            if (img) {
+                img.src = "http://" + ipESP32 + ":81/stream";
+            }
+        }
+
+        // Función para reconectar la cámara de forma rápida
+        function reconectarCamara() {
+            const img = document.getElementById('streamCamara');
+            if (img) {
+                img.src = "";
+                setTimeout(cargarVideo, 200);
+            }
+        }
+
+        window.addEventListener('load', cargarVideo);
+
+        // Lógica para alternar entre pestañas de forma fluida (SPA)
+        function cambiarSeccion(idSeccion) {
+            let secciones = document.querySelectorAll('.seccion');
+            secciones.forEach(function(sec) {
+                sec.classList.remove('visible');
+            });
+
+            let botones = document.querySelectorAll('nav button');
+            botones.forEach(function(btn) {
+                btn.classList.remove('activo');
+            });
+
+            const destino = document.getElementById(idSeccion);
+            const botonDestino = document.getElementById('nav-' + idSeccion);
+            
+            if (destino) destino.classList.add('visible');
+            if (botonDestino) botonDestino.classList.add('activo');
+        }
+    </script>
+</body>
+</html>
