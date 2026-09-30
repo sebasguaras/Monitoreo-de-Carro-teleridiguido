@@ -217,14 +217,12 @@
             margin-bottom: 5px;
             font-size: 1.1em;
         }
-        /* Ajuste para que los videos no rompan la caja */
-        video {
-            width: 100%;
-            height: 100%;
-            max-height: 380px;
-            object-fit: cover;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        
+        /* Ajuste para que los videos de YouTube no rompan la caja */
+        iframe {
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            max-width: 100%;
         }
 
         /* Efecto dinámico y mejora de nitidez para las imágenes */
@@ -267,7 +265,6 @@
             .imagenes-comparacion { flex-direction: column; align-items: center; }
             .foto-box { min-width: 100%; margin-bottom: 15px; }
             .multimedia-box { height: auto; min-height: 200px; padding: 10px; }
-            video { max-height: 250px; }
         }
     </style>
 </head>
@@ -375,7 +372,6 @@
             </div>
         </div>
 
-
         <!-- Componente 5 -->
         <div class="caja-componente">
             <h3>4. Alimentación: Baterías 18650 y Módulo LM2596</h3>
@@ -392,6 +388,7 @@
                 </div>
             </div>
         </div>
+        
         <!-- Nuevo Elemento: Módulo Bluetooth -->
         <div class="caja-componente">
             <h3>5. Módulo Bluetooth (HC-05 / HC-06)</h3>
@@ -408,7 +405,6 @@
                 </div>
             </div>
         </div>
-
     </section>
 
     <!-- ========================================== -->
@@ -417,7 +413,6 @@
     <section id="elementos" class="seccion">
         <h2>Elementos Adicionales</h2>
         <p>En esta sección se detallan componentes complementarios de conexión y estructura utilizados para el ensamblaje.</p>
-        
         
         <!-- Elemento 2 -->
         <div class="caja-componente">
@@ -492,6 +487,7 @@
                 <p><span class="titulo-captura">1. Estructura y DOCTYPE</span> Esta línea define que el documento es un archivo HTML5, asegurando que el navegador interprete correctamente el código de nuestra interfaz web.</p>
                 <img src="captura DOCI.png" alt="Captura 1">
             </div>
+            <!-- (El resto de las capturas se mantienen igual para no hacer muy largo el código aquí, tu las tienes completas del 2 al 20) -->
             <div class="captura-item">
                 <p><span class="titulo-captura">2. Head y Metadatos</span> Configura la vista para dispositivos móviles (viewport) y el título de la pestaña, garantizando que el panel de control se adapte a cualquier pantalla.</p>
                 <img src="captura 2.png" alt="Captura 2">
@@ -525,7 +521,7 @@
                 <img src="captura 9.png" alt="Captura 9">
             </div>
             <div class="captura-item">
-                <p><span class="titulo-captura">10. Datos del Grupo</span> Código que muestra los nombres específicos de los integrantes del Grupo N°. 9 (Sebastián Guaras, Jordan Ramírez).</p>
+                <p><span class="titulo-captura">10. Datos del Grupo</span> Código que muestra los nombres específicos de los integrantes del Grupo N°. 9.</p>
                 <img src="captura 10.png" alt="Captura 10">
             </div>
             <div class="captura-item">
@@ -578,15 +574,18 @@
         <h2>Videos de Armado del Carro</h2>
         <p style="text-align: center;">Proceso paso a paso de la construcción física y electrónica de nuestro vehículo teledirigido.</p>
         
-        <!-- Video 1 -->
-        <div class="video-container">
-                <h4>Primer video de ensamblaje</h4>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 30px;">
+            <!-- Video 1 -->
+            <div style="text-align: center;">
+                <h4 style="color: #f6f3f3; margin-bottom: 15px;">Primer video de ensamblaje</h4>
                 <iframe width="315" height="560" src="https://www.youtube.com/embed/AiQXuYx04OE" title="Primer video de ensamblaje" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
-        
-        <!-- Video 2 -->
-        <div class="multimedia-box" style="border: none; background: transparent; padding: 0;">
-            <video src="VIDEOENSAMBLAJE1.mp4" controls preload="metadata"></video>
+            
+            <!-- Video 2 -->
+            <div style="text-align: center;">
+                <h4 style="color: #f6f3f3; margin-bottom: 15px;">Segundo video de ensamblaje</h4>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/bqULxBr9hVI" title="Segundo video de ensamblaje" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
         </div>
     </section>
 
@@ -598,12 +597,13 @@
         <p style="text-align: center;">Demostración del vehículo en movimiento, pruebas de control remoto y respuesta de los sensores en pista.</p>
         
         <!-- Espacio para el Video de Funcionamiento -->
-       <div class="video-container">
-                <h4>Segundo video de ensamblaje</h4>
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/bqULxBr9hVI" title="Segundo video de ensamblaje" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-            </div>
+       <div style="display: flex; flex-direction: column; align-items: center; margin-top: 30px;">
+                <h4 style="color: #f6f3f3; margin-bottom: 15px;">Video de prueba y demostración</h4>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/JvamPZnHJsA" title="Video de prueba y demostración" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
     </section>
-<!-- ========================================== -->
+    
+    <!-- ========================================== -->
     <!-- SECCIÓN: INTEGRANTES                       -->
     <!-- ========================================== -->
     <section id="integrantes" class="seccion">
